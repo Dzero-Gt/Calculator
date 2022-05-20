@@ -1,9 +1,14 @@
-//variables
-let firstValue = '';
-let secondValue = '';
-let operatorValue = '';
-let decimalFlag = false;
+//variables & initialization
+function clear(){
+    let firstValue = '';
+    let secondValue = '';
+    let operatorValue = '';
+    let decimalFlag = false;
+    let secondNumber = false;
+}
 
+
+clear();
 
 //functions
 
@@ -35,7 +40,6 @@ function convert(a){
     return temp;
 }
 
-
 function operate(a, b, operator){
     a = convert(a);
     b = convert(b);
@@ -53,3 +57,31 @@ function operate(a, b, operator){
             return divide(a, b);
     }
 }
+
+function director(e) {
+    switch (this.dataset.type) {
+        case number:
+            appendNumber(this.dataset.key)
+            break;
+        case operation:
+            storeOperator(this.dataset.key)
+            break;
+        case decimal:
+            appendDecimal(this.dataset.key)
+            break;
+        case eval:
+            operate(a, b, operatorValue)
+            break;
+    }
+}
+
+
+//listeners
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click',director));
+
+
+//DOM editing
+
+
+

@@ -29,7 +29,7 @@ button {
     background-color: #d18631d3;
 }
 
-.clear {
+[data-type = 'clear'] {
    width: 399px;
 }
 

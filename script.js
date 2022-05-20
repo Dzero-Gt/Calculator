@@ -1,14 +1,20 @@
 //variables & initialization
+let firstValue = '';
+let secondValue = '';
+let operatorValue = '';
+let decimalFlag = false;
+let secondNumber = false;
+
 function clear(){
-    let firstValue = '';
-    let secondValue = '';
-    let operatorValue = '';
-    let decimalFlag = false;
-    let secondNumber = false;
+    firstValue = '';
+    secondValue = '';
+    operatorValue = '';
+    decimalFlag = false;
+    secondNumber = false;
 }
 
 
-clear();
+
 
 //functions
 
@@ -59,19 +65,56 @@ function operate(a, b, operator){
 }
 
 function director(e) {
+    const dataType = this.dataset.type;
+    console.log(dataType);
     switch (this.dataset.type) {
-        case number:
+        case 'number':
             appendNumber(this.dataset.key)
             break;
-        case operation:
+        case 'operation':
             storeOperator(this.dataset.key)
             break;
-        case decimal:
-            appendDecimal(this.dataset.key)
+        case 'decimal':
+            appendDecimal()
             break;
-        case eval:
+        case 'eval':
             operate(a, b, operatorValue)
             break;
+        case 'clear':
+            clear();
+            break;
+    }
+}
+
+function appendNumber(numb){
+    if (secondNumber == false){
+        firstValue += numb;
+        console.log(firstValue);
+    }
+    else {
+        secondValue += numb;
+        console.log(secondValue);
+    }
+}
+
+function appendDecimal(){
+    if (decimalFlag == false){
+        if (secondNumber == false){
+            firstValue += '.';
+            console.log(firstValue);
+        }
+        else {
+            secondValue += '.';
+        }
+        decimalFlag = true;
+    }
+}
+
+function storeOperator(operator){
+    if (secondNumber == false){
+    operatorValue = operator;
+    secondNumber = true;
+    console.log(operator);
     }
 }
 

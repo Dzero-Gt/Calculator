@@ -3,7 +3,9 @@ let firstValue = '';
 let secondValue = '';
 let operatorValue = '';
 let decimalFlag = false;
+let firstNumbDec = false;
 let secondNumber = false;
+let readoutValue = ' ';
 
 function clear(){
     firstValue = '';
@@ -11,6 +13,8 @@ function clear(){
     operatorValue = '';
     decimalFlag = false;
     secondNumber = false;
+    firstNumbDec = false;
+    readoutValue = ' ';
 }
 
 
@@ -49,19 +53,25 @@ function convert(a){
 function operate(a, b, operator){
     a = convert(a);
     b = convert(b);
+    secondValue = '';
+    secondNumber = false;
+    firstNumbDec == false? decimalFlag = false: decimalFlag = true;
     switch (operator) {
         case '+':
-            return add(a, b);
+            firstValue = add(a, b);
             break;
         case '-':
-            return subtract(a, b);
+            firstValue = subtract(a, b);
             break;
         case '*':
-            return multiply(a, b);
+            firstValue = multiply(a, b);
             break;
         case '/':
-            return divide(a, b);
+            firstValue = divide(a, b);
     }
+    firstValue *= 10000;
+    Math.round(firstValue);
+    firstValue /= 10000;
 }
 
 function director(e) {
@@ -69,16 +79,17 @@ function director(e) {
     console.log(dataType);
     switch (this.dataset.type) {
         case 'number':
-            appendNumber(this.dataset.key)
+            appendNumber(this.dataset.key);
             break;
         case 'operation':
-            storeOperator(this.dataset.key)
+            storeOperator(this.dataset.key);
             break;
         case 'decimal':
             appendDecimal()
             break;
         case 'eval':
-            operate(a, b, operatorValue)
+            operate(firstValue, secondValue, operatorValue);
+            console.log(firstValue);
             break;
         case 'clear':
             clear();
@@ -102,6 +113,7 @@ function appendDecimal(){
         if (secondNumber == false){
             firstValue += '.';
             console.log(firstValue);
+            firstNumbDec = true;
         }
         else {
             secondValue += '.';
@@ -112,19 +124,36 @@ function appendDecimal(){
 
 function storeOperator(operator){
     if (secondNumber == false){
-    operatorValue = operator;
-    secondNumber = true;
-    console.log(operator);
+        operatorValue = operator;
+        secondNumber = true;
+        decimalFlag = false;
+        console.log(operator);
+    }
+    else{
+        operate(firstValue, secondValue, operatorValue);
+        decimalFlag = false;
+        operatorValue = operator;
+        secondNumber = true;
     }
 }
-
 
 //listeners
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('click',director));
+buttons.forEach(button => button.addEventListener('click',fill));
 
 
 //DOM editing
 
-
-
+function fill(){
+    
+    
+    if (secondNumber == false){
+        readoutValue = firstValue;
+    }
+    else {
+        readoutValue = secondValue;
+    }
+    document.getElementById('readout').innerHTML = readoutValue;
+    
+}

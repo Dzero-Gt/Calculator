@@ -29,13 +29,28 @@ button {
     background-color: #d18631d3;
 }
 
+[data-type = 'operation'] {
+    background-color: #300faaa2; 
+    border-color: #300faaa2;
+    color: white;
+}
+
+[data-type = 'eval'] {
+    background-color: #300faaa2; 
+    border-color: #300faaa2;
+    color: white;
+}
+
 [data-type = 'clear'] {
    width: 399px;
 }
 
-.readout {
+#readout {
     background-color: #d18631d3;
-    width: 400px;
-    height: 60px;
+    width: 388px;
+    height: 48px;
     border-radius: 5px;
+    text-align: end;
+    font-size: 48px;
+    padding: 6px;
 }
